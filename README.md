@@ -19,9 +19,7 @@ This solution aims to overhaul the existing security infrastructure. At the hear
 3. ***Documentation***:
    1. Final Report
    2. Personal Conclusions 
-6. ***Presentation***:
-   1. Visual Aids
-   2. Video Demonstration
+
 
 
 ### Team Members
