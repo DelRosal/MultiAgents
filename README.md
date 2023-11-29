@@ -1,6 +1,6 @@
 # Challenge: Catch the Robber
 
-In the realm of industrial security, ***Nucela Solutions*** is embarking on a groundbreaking project that merges advanced technology with strategic operational practices. This initiative, spearheaded by experts in intelligent agents, computer graphics, and comprehensive documentation, aims to revolutionize the way industrial sites manage and monitor vehicular movements.
+In the realm of industrial security, ***Nuclea Solutions*** is embarking on a groundbreaking project that merges advanced technology with strategic operational practices. This initiative, spearheaded by experts in intelligent agents, computer graphics, and comprehensive documentation, aims to revolutionize the way industrial sites manage and monitor vehicular movements.
 
 The project's objective is to develop a robust, ***real-time monitoring system*** that ensures every truck entering and exiting the premises is accurately logged and accounted for. To achieve this, the project will employ intelligent ***agents*** capable of sophisticated communication and interaction, leveraging the latest advancements in computer graphics to create a dynamic simulation environment within the Unreal Engine platform.
 
