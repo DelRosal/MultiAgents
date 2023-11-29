@@ -33,3 +33,6 @@ This solution aims to overhaul the existing security infrastructure. At the hear
 *Emilio Berber Maldonado*       **A01640603**
 
 *Guillermo Esquivel Ortiz*      **A01625621**
+
+*Samuel García Berenfeld*      **A01642317**
+
