@@ -42,7 +42,7 @@ def main():
     cap.set(cv2.CAP_PROP_FRAME_WIDTH, frame_width)
     cap.set(cv2.CAP_PROP_FRAME_HEIGHT, frame_height)
 
-    model = YOLO("./models/yolov8n.pt")
+    model = YOLO("./models/yolov8l.pt")
 
     box_annotator = sv.BoxAnnotator(
         thickness=2,
@@ -114,12 +114,14 @@ def main():
             left = True
             if (zone_right.current_count > 0):
                 exit += 1
-                left = False     
+                left = False
+                right = False     
         if (zone_right.current_count > 0 or right): # left to right = entrance
             right = True
             if (zone_left.current_count > 0):
                 entrances += 1
                 right = False
+                left = False
 
         cv2.imshow("yolov8", frame)
 
