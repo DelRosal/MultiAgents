@@ -14,10 +14,10 @@ ZONE_POLYGON_LEFT= np.array([
 ])
 
 ZONE_POLYGON_RIGHT = np.array([
-    [0.75, 0],
+    [0.65, 0],
     [1, 0],
     [1, 1],
-    [0.75, 1]
+    [0.65, 1]
 ])
 
 ## Set parameters
@@ -42,7 +42,7 @@ def main():
     cap.set(cv2.CAP_PROP_FRAME_WIDTH, frame_width)
     cap.set(cv2.CAP_PROP_FRAME_HEIGHT, frame_height)
 
-    model = YOLO("./yolov8n.pt")
+    model = YOLO("./yolov8l.pt")
 
     box_annotator = sv.BoxAnnotator(
         thickness=2,
@@ -78,6 +78,11 @@ def main():
         text_scale=2
     )
 
+    left = False
+    right = False
+    exit = 0
+    entrances = 0
+
     while True:
         ret, frame = cap.read()
 
@@ -104,13 +109,24 @@ def main():
         frame = zone_annotator_left.annotate(scene=frame)
         frame = zone_annotator_right.annotate(scene=frame)
 
+        # right to left = Exit
+        if (zone_left.current_count > 0 or left):
+            left = True
+            if (zone_right.current_count > 0):
+                exit += 1
+                left = False     
+        if (zone_right.current_count > 0 or right): # left to right = entrance
+            right = True
+            if (zone_left.current_count > 0):
+                entrances += 1
+                right = False
 
         cv2.imshow("yolov8", frame)
 
         if (cv2.waitKey(30) == 27): # Esc key
             break
 
-    print("Finished!")
+    print(f"Finished with {entrances} entrances and {exit} exits")
 
 if __name__ == '__main__':
     main()
