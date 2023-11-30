@@ -78,57 +78,59 @@ def main():
         text_scale=2
     )
 
-    left = False
-    right = False
-    exit = 0
     entrances = 0
-
+    exits = 0
+    last_detected_zone = None  # This variable tracks the last zone where a truck was detected
+    frames = 0
     while True:
         ret, frame = cap.read()
+        frames += 1
 
-        result = model(frame, agnostic_nms=True)[0]
-        detections = sv.Detections.from_yolov8(result) # for version 0.16.0 or > of supervision use from_ultralytics(result)
-        detections = detections[detections.class_id == 67] # just don't count ourselves 
+        if frames % 3 == 0:
 
-        labels = [
-            f"{model.model.names[class_id]} {confidence:0.2f}"
-            for _, confidence, class_id, _
-            in detections
-        ]
-        
-        ## Add square detections
-        frame = box_annotator.annotate(
-            scene=frame, 
-            detections=detections,
-            labels=labels
-        )
-        
-        ## Detection zones
-        zone_left.trigger(detections=detections)
-        zone_right.trigger(detections=detections)
-        frame = zone_annotator_left.annotate(scene=frame)
-        frame = zone_annotator_right.annotate(scene=frame)
+            result = model(frame, agnostic_nms=True)[0]
+            detections = sv.Detections.from_yolov8(result) # for version 0.16.0 or > of supervision use from_ultralytics(result)
+            detections = detections[detections.class_id == 67] # just don't count ourselves 
 
-        # right to left = Exit
-        if (zone_left.current_count > 0 or left):
-            left = True
-            if (zone_right.current_count > 0):
-                exit += 1
-                left = False
-                right = False     
-        if (zone_right.current_count > 0 or right): # left to right = entrance
-            right = True
-            if (zone_left.current_count > 0):
-                entrances += 1
-                right = False
-                left = False
+            labels = [
+                f"{model.model.names[class_id]} {confidence:0.2f}"
+                for _, confidence, class_id, _
+                in detections
+            ]
+
+            ## Add square detections
+            frame = box_annotator.annotate(
+                scene=frame, 
+                detections=detections,
+                labels=labels
+            )
+
+            ## Detection zones
+            zone_left.trigger(detections=detections)
+            zone_right.trigger(detections=detections)
+            frame = zone_annotator_left.annotate(scene=frame)
+            frame = zone_annotator_right.annotate(scene=frame)
+
+            # Update the last detected zone based on current counts
+            if zone_left.current_count > 0:
+                if last_detected_zone == 'right':
+                    # Truck was previously detected on the right, now on the left - count as an exit
+                    exits += 1
+                last_detected_zone = 'left'
+
+            if zone_right.current_count > 0:
+                if last_detected_zone == 'left':
+                    # Truck was previously detected on the left, now on the right - count as an entrance
+                    entrances += 1
+                last_detected_zone = 'right'
 
         cv2.imshow("yolov8", frame)
 
         if (cv2.waitKey(30) == 27): # Esc key
             break
 
-    print(f"Finished with {entrances} entrances and {exit} exits")
+    print(f"Finished with {entrances} entrances and {exits} exits")
+    print(f"frames: {frames}")
 
 if __name__ == '__main__':
     main()

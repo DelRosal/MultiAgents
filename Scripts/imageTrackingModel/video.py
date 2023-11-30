@@ -4,7 +4,6 @@ import supervision as sv # In this case we are using a deprecared version 0.3.0
 import numpy as np
 from ultralytics import YOLO 
 
-
 ## Zone detection to count detections
 ZONE_POLYGON_LEFT= np.array([
     [0, 0],
