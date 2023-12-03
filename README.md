@@ -14,7 +14,9 @@ This solution aims to overhaul the existing security infrastructure. At the hear
    2. Complete Working 3D models
    3. Final Scenario
 2. ***Scripts***:
-   1. Agent Py Program 
+   1. Agentpy Simulation 
+   2. CV Model Trainer
+   3. AI-Based Security Overhaul 
 3. ***Documentation***:
    1. Final Report
    2. Presentation
