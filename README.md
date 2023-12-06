@@ -41,9 +41,9 @@ This solution aims to overhaul the existing security infrastructure. At the hear
 ### Images
 
 **Simulation UE5:**
-![Alt text](image.png)
+![Alt text](img/image.png)
 
 **AI Model:**
-![Alt text](image-1.png)
-![Alt text](image-2.png)
+![Alt text](img/image-1.png)
+![Alt text](img/image-2.png)
 
